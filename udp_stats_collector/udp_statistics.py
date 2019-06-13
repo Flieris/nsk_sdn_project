@@ -16,7 +16,7 @@ from ryu.lib.packet import ipv4
 from ryu.lib.packet import udp
 
 
-parent_path = os.path.abspath('.')
+parent_path = os.path.abspath('..')
 DATABASE_FILE = parent_path+"/stats_db/statisticsDB.db"
 
 
@@ -106,8 +106,8 @@ class UdpStatistics(app_manager.RyuApp):
                 return
             self.logger.debug("Count(*) rows: %s", row[0])
             # insert udp packet stats
-            query1 = "insert into tudpstatistics(id,host_id,event_time,source_ip,source_port,destination_ip,destination_port,payload) values({},{},'{}','{}',{},'{}',{},'{}')".format(
-                ip_pkt.identification, dpid, datetime.datetime.now(), ip_pkt.src, udp_dtg.src_port, ip_pkt.dst, udp_dtg.dst_port, data_packet[-1].rstrip())
+            query1 = "insert into tudpstatistics(id,host_id,event_time,source_eth_addr,source_ip,source_port,destination_eth_addr,destination_ip,destination_port,payload) values({},{},'{}','{}','{}',{},'{}','{}',{},'{}')".format(
+                ip_pkt.identification, dpid, datetime.datetime.now(), eth_pkt.src, ip_pkt.src, udp_dtg.src_port, eth_pkt.dst, ip_pkt.dst, udp_dtg.dst_port, data_packet[-1].rstrip())
             cur.execute(query1)
             conn.commit()
             cur.close()

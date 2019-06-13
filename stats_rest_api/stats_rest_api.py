@@ -15,12 +15,11 @@ DATABASE = parent_path+"/stats_db/statisticsDB.db"
 def statistics(dpid):
     #show info based on router id
     if request.method == 'GET':
-        return get_stats(dpid)
+        return get_stats_by_dpid(dpid)
     if request.method == 'DELETE':
-        return remove_stats(dpid)
+        return remove_stats_by_dpid(dpid)
 
-
-def get_stats(dpid):
+def get_stats_by_dpid(dpid):
     conn = get_db(DATABASE)
     if conn is None:
         return app.response_class(
@@ -63,11 +62,13 @@ def get_stats(dpid):
         single = {
             "packet_id": row[0],
             "event_time": row[2],
-            "source_ip": row[3],
-            "source_port": row[4],
-            "destination_ip": row[5],
-            "destination_port": row[6],
-            "payload": row[7]
+            "source_eth_addr": row[3],
+            "source_ip": row[4],
+            "source_port": row[5],
+            "destination_eth_addr": row[6],
+            "destination_ip": row[7],
+            "destination_port": row[8],
+            "payload": row[9]
         }
         stats_data.append(single)
     host_data["statistics"] = stats_data
@@ -80,7 +81,7 @@ def get_stats(dpid):
     )
     return response
 
-def remove_stats(dpid):
+def remove_stats_by_dpid(dpid):
     conn = get_db(DATABASE)
     if conn is None:
         return app.response_class(

@@ -33,8 +33,10 @@ if __name__ == "__main__":
         id integer PRIMARY KEY,
         host_id integer not null,
         event_time text not null,
+        source_eth_addr text not null,
         source_ip text not null,
         source_port integer not null,
+        destination_eth_addr text not null,
         destination_ip text not null,
         destination_port integer not null,
         payload text not null
